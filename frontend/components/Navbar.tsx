@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import Logo from "../public/images/logo.jpg";
 
 const Navbar = () => {
   return (
@@ -8,7 +9,7 @@ const Navbar = () => {
         <div className="container">
           <div className="logo">
             <Link href={"/"}>
-              <img src={"images/logo.jpg"} alt="sadasd" />
+              <img src={Logo.src} alt="" />
             </Link>
           </div>
           <div className="links">
