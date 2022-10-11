@@ -37,7 +37,8 @@ body {
       justify-content: center;
       height: 100vh;
       background-color: $lightGreen;
-      width: 100vw;
+      // width: 100vw;
+      margin: 0px -100px !important;
 
       h1 {
         font-size: 20px;

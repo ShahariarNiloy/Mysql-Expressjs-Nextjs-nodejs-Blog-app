@@ -1,3 +1,4 @@
+import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
@@ -12,19 +13,26 @@ const Register = () => {
 
   const router = useRouter();
 
-  const handleChange = (e: any) => {
-    setInputs((prev: any) => ({ ...prev, [e.target.name]: e.target.value }));
+  const handleChange = (e:any) => {
+    setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    // try {
-    //   await axios.post("/auth/register", inputs);
-    //   navigate("/login");
-    // } catch (err) {
-    //   setError(err.response.data);
-    // }
+
+    if(!inputs.email || !inputs.password || !inputs.email){
+      setError("Please Fill Out Every Field !!")
+      return
+    }
+    try {
+      await axios.post("api/auth/register", inputs);
+      router.push("/login");
+    } catch (err) {
+      setError(err.response.data);
+    }
   };
+
+  console.log({err})
 
   return (
     <div className="auth">
@@ -52,7 +60,7 @@ const Register = () => {
           onChange={handleChange}
         />
         <button onClick={handleSubmit}>Register</button>
-        {err && <p>{err}</p>}
+        {/* {err && <p>{err}</p>} */}
         <span>
           Do you have an account? <Link href={"/login"}>Login</Link>
         </span>
