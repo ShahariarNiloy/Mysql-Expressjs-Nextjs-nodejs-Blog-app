@@ -25,14 +25,16 @@ const Register = () => {
       return
     }
     try {
-      await axios.post("api/auth/register", inputs);
-      router.push("/login");
+      const data = await axios.post("api/auth/register", inputs);
+      if(data.status === 200){
+        router.push("/login");
+      }
     } catch (err) {
-      setError(err.response.data);
+      
+      setError(err?.response?.data);
     }
   };
 
-  console.log({err})
 
   return (
     <div className="auth">
@@ -60,7 +62,7 @@ const Register = () => {
           onChange={handleChange}
         />
         <button onClick={handleSubmit}>Register</button>
-        {/* {err && <p>{err}</p>} */}
+        {err && <p>{err}</p>}
         <span>
           Do you have an account? <Link href={"/login"}>Login</Link>
         </span>

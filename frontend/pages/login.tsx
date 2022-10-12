@@ -1,3 +1,4 @@
+import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
@@ -14,17 +15,22 @@ const Login = () => {
   //   const { login } = useContext(AuthContext);
 
   const handleChange = (e: any) => {
-    setInputs((prev: any) => ({ ...prev, [e.target.name]: e.target.value }));
+    setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    // try {
-    //   await login(inputs)
-    //   navigate("/");
-    // } catch (err) {
-    //   setError(err.response.data);
-    // }
+    try {
+      const data = await axios.post("/api/auth/login", inputs, {
+        withCredentials: true,
+      });
+
+      if (data.status === 200) {
+        router.push("/");
+      }
+    } catch (err) {
+      setError(err?.response?.data);
+    }
   };
   return (
     <div className="auth">
@@ -47,7 +53,8 @@ const Login = () => {
         <button onClick={handleSubmit}>Login</button>
         {err && <p>{err}</p>}
         <span>
-          Don't you have an account? <Link href={"/register"}>Register</Link>
+          {"Don't"} you have an account?{" "}
+          <Link href={"/register"}>Register</Link>
         </span>
       </form>
     </div>
